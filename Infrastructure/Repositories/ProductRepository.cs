@@ -9,26 +9,26 @@ namespace Infrastructure.Repositories
 {
     public class ProductRepository : IProductRepository
     {
-        private readonly IMongoCollection<Product> _collection;
+        private readonly IMongoCollection<ProductEntity> _collection;
         public ProductRepository(IMongoDatabase database, IOptions<MongoDbSettings> options)
         {
             var collectionName = options.Value.Collections.ProductCollection;
-            _collection = database.GetCollection<Product>(collectionName);
+            _collection = database.GetCollection<ProductEntity>(collectionName);
         }
 
-        public async Task<List<Product>> GetAsync() =>
-            await _collection.Find(_ => true).ToListAsync();
+        public async Task<List<ProductEntity>> GetAsync() =>
+            await _collection.Find(x => !x.IsDeleted).ToListAsync();
 
-        public async Task<Product?> GetByIdAsync(string id) =>
-            await _collection.Find(p => p.Id == id).FirstOrDefaultAsync();
+        public async Task<ProductEntity?> GetByIdAsync(string id) =>
+            await _collection.Find(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
 
-        public async Task CreateAsync(Product product) =>
+        public async Task CreateAsync(ProductEntity product) =>
             await _collection.InsertOneAsync(product);
 
-        public async Task UpdateAsync(string id, Product product) =>
-            await _collection.ReplaceOneAsync(p => p.Id == id, product);
+        public async Task UpdateAsync(string id, ProductEntity product) =>
+            await _collection.ReplaceOneAsync(x => x.Id == id && !x.IsDeleted, product);
 
-        public async Task DeleteAsync(string id) =>
-            await _collection.DeleteOneAsync(p => p.Id == id);
+        public async Task DeleteAsync(string id, ProductEntity product) =>
+            await _collection.ReplaceOneAsync(x => x.Id == id && !x.IsDeleted, product);
     }
 }

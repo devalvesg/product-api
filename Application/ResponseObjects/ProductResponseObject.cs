@@ -1,12 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Application.Common;
 
 namespace Application.ResponseObjects
 {
-    internal class ProductResponseObject
+    public class ProductResponseObject : BaseResponseObject
     {
+        public string Name { get; set; }
+        public string Description { get; set; }
+        public string Color { get; set; }
+        public decimal Weight { get; set; }
+        public string Type { get; set; }
+        public decimal Price { get; set; }
+        public DateTime RegisteredAt { get; set; }
     }
 }

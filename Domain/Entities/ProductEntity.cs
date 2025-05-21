@@ -3,7 +3,7 @@ using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Entities
 {
-    public class Product : BaseEntity
+    public class ProductEntity : BaseEntity
     {
         [BsonElement("name")]
         public string Name { get; set; }

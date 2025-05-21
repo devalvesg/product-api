@@ -1,4 +1,7 @@
-﻿using AutoMapper;
+﻿using Application.RequestObjects;
+using Application.ResponseObjects;
+using AutoMapper;
+using Domain.Entities;
 
 namespace Application.Mappings
 {   
@@ -6,6 +9,8 @@ namespace Application.Mappings
     {
         public MappingProfile()
         {
+            CreateMap<ProductRequestObject, ProductEntity>();
+            CreateMap<ProductEntity, ProductResponseObject>();
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Domain.Common
     {
         [BsonId]
         [BsonRepresentation(BsonType.ObjectId)]
-        public string? Id { get; set; }
+        public string Id { get; set; }
         [BsonElement("is_deleted")]
         public bool IsDeleted { get; set; } = false;
     }
