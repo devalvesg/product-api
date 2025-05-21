@@ -1,0 +1,22 @@
+## Build results
+bin/
+obj/
+
+## User-specific files
+*.user
+*.suo
+
+## IDEs
+.vs/
+.idea/
+.vscode/
+
+## Configurações sensíveis
+secrets.json
+
+## Logs, pacotes e artefatos
+*.log
+TestResults/
+*.nupkg
+.nuget/
+packages/
