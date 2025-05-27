@@ -1,4 +1,6 @@
 ﻿using Application.Contracts.Data;
+using Application.Contracts.UseCases;
+using Application.UseCases;
 using Infrastructure.Repositories;
 using Infrastructure.Settings;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +30,11 @@ namespace Infrastructure
                 return client.GetDatabase(opts.DatabaseName);
             });
 
+            //Repository
             services.AddScoped<IProductRepository, ProductRepository>();
+
+            //UseCases
+            services.AddScoped<IProductCrudUseCase, ProductCrudUseCase>();
             return services;
         }
     }

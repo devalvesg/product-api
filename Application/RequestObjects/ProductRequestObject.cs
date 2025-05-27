@@ -2,7 +2,7 @@
 
 namespace Application.RequestObjects
 {
-    public class ProductRequestObject : BaseRequestObject
+    public class ProductRequestObject
     {
         public string Name { get; set; }
         public string Description { get; set; }
@@ -10,6 +10,5 @@ namespace Application.RequestObjects
         public decimal Weight { get; set; }
         public string Type { get; set; }
         public decimal Price { get; set; }
-        public DateTime RegisteredAt { get; set; }
     }
 }
