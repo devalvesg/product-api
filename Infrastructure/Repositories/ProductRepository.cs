@@ -33,10 +33,28 @@ namespace Infrastructure.Repositories
             return product;
         }
 
-        public async Task<ProductEntity> UpdateAsync(string id, ProductEntity product)
+        public async Task<ProductEntity> UpdateNameAsync(string id, string name)
         {
-            await _collection.ReplaceOneAsync(x => x.Id == id && !x.IsDeleted, product);
-            return product;
+            var filter = Builders<ProductEntity>
+                .Filter
+                .Eq(p => p.Id, id);
+
+            var update = Builders<ProductEntity>
+                .Update
+                .Set(p => p.Name, name);
+
+            var options = new FindOneAndUpdateOptions<ProductEntity>
+            {
+                ReturnDocument = ReturnDocument.After
+            };
+
+            var updatedProduct = await _collection.FindOneAndUpdateAsync(
+                filter,
+                update,
+                options
+            );
+
+            return updatedProduct;
         }
 
         public async Task DeleteAsync(string id)

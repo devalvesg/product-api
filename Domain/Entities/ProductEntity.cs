@@ -1,4 +1,5 @@
-﻿using Domain.Common;
+﻿using Application.Enums;
+using Domain.Common;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Domain.Entities
@@ -14,7 +15,7 @@ namespace Domain.Entities
         [BsonElement("weight")]
         public decimal Weight { get; set; }
         [BsonElement("type")]
-        public string Type { get; set; }
+        public ProductType Type { get; set; }
         [BsonElement("price")]
         public decimal Price { get; set; }
         [BsonElement("registered_at")]

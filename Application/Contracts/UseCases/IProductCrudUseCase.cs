@@ -7,7 +7,7 @@ namespace Application.Contracts.UseCases
         Task<List<ProductEntity>> GetProducts();
         Task<ProductEntity?> GetProductById(string id);
         Task<ProductEntity> CreateProduct(ProductEntity product);
-        Task<ProductEntity> UpdateProduct(ProductEntity product, string id);
+        Task<ProductEntity> UpdateProductName(string name, string id);
         Task DeleteProduct (string id);
     }
 }

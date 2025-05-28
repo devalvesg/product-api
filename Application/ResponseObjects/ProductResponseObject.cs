@@ -1,4 +1,5 @@
 ﻿using Application.Common;
+using Application.Enums;
 
 namespace Application.ResponseObjects
 {
@@ -8,7 +9,7 @@ namespace Application.ResponseObjects
         public string Description { get; set; }
         public string Color { get; set; }
         public decimal Weight { get; set; }
-        public string Type { get; set; }
+        public ProductType Type { get; set; }
         public decimal Price { get; set; }
         public DateTime RegisteredAt { get; set; }
     }

@@ -31,7 +31,7 @@ namespace Application.UseCases
             return await _repository.GetAsync();
         }
 
-        public async Task<ProductEntity> UpdateProduct(ProductEntity product, string id)
+        public async Task<ProductEntity> UpdateProductName(string name, string id)
         {
             var existsProduct = await _repository.GetByIdAsync(id);
 
@@ -40,12 +40,12 @@ namespace Application.UseCases
                 throw new CustomException("Product not found");
             }
 
-            if (product.Name == existsProduct.Name)
+            if (name == existsProduct.Name)
             {
                 throw new CustomException("Product name already exists");
             }
 
-            return await _repository.UpdateAsync(id, product);
+            return await _repository.UpdateNameAsync(id, name);
         }
         public async Task DeleteProduct(string id)
         {
