@@ -25,6 +25,12 @@ namespace Api.Controllers
             return Ok(_mapper.Map<ProductResponseObject>(await _useCase.GetProductById(productId)));
         }
 
+        [HttpGet("/filter")]
+        public async Task<ActionResult> GetProductByName([FromQuery] string productName)
+        {
+            return Ok(_mapper.Map<ProductResponseObject>(await _useCase.GetProductByName(productName)));
+        }
+
         [HttpPost]
         public async Task<ActionResult> CreateProduct([FromBody] ProductRequestObject product)
         {
@@ -32,10 +38,24 @@ namespace Api.Controllers
             return Ok(_mapper.Map<ProductResponseObject>(productResponse));
         }
 
-        [HttpPatch("/{productId}")]
+        [HttpPatch("/update-name/{productId}")]
         public async Task<ActionResult> UpdateProductName([Required(AllowEmptyStrings = false, ErrorMessage = "Name is required")] string name, string productId)
         {
             var productResponse = await _useCase.UpdateProductName(name, productId);
+            return Ok(_mapper.Map<ProductResponseObject>(productResponse));
+        }
+        
+        [HttpPatch("/update-price/{productId}")]
+        public async Task<ActionResult> UpdateProductName([Required(AllowEmptyStrings = false, ErrorMessage = "Price is required")][Range(0.01, 1000000, ErrorMessage = "Price must be greather than 0")] decimal price, string productId)
+        {
+            var productResponse = await _useCase.UpdateProductPrice(price, productId);
+            return Ok(_mapper.Map<ProductResponseObject>(productResponse));
+        }
+        
+        [HttpPut("/update/{productId}")]
+        public async Task<ActionResult> UpdateProduct(ProductRequestObject product, string productId)
+        {
+            var productResponse = await _useCase.UpdateProduct(productId, _mapper.Map<ProductEntity>(product));
             return Ok(_mapper.Map<ProductResponseObject>(productResponse));
         }
 

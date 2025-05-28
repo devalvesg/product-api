@@ -4,6 +4,7 @@ using Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
 using ZstdSharp.Unsafe;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories
 {
@@ -26,11 +27,29 @@ namespace Infrastructure.Repositories
         {
             return await _collection.Find(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
         }
+        
+        public async Task<ProductEntity?> GetByNameAsync(string productName)
+        {
+            return await _collection.Find(x => x.Name.ToLower() == productName.ToLower() && !x.IsDeleted).FirstOrDefaultAsync();
+        }
 
         public async Task<ProductEntity> CreateAsync(ProductEntity product)
         {
             await _collection.InsertOneAsync(product);
             return product;
+        }
+        
+        public async Task<ProductEntity> ReplaceAsync(ProductEntity product)
+        {
+            var filter = Builders<ProductEntity>.Filter.Eq(p => p.Id, product.Id);
+            var options = new FindOneAndReplaceOptions<ProductEntity>
+            {
+                ReturnDocument = ReturnDocument.After 
+            };
+
+            var replaced = await _collection.FindOneAndReplaceAsync(filter, product, options);
+
+            return replaced;
         }
 
         public async Task<ProductEntity> UpdateNameAsync(string id, string name)
@@ -42,6 +61,30 @@ namespace Infrastructure.Repositories
             var update = Builders<ProductEntity>
                 .Update
                 .Set(p => p.Name, name);
+
+            var options = new FindOneAndUpdateOptions<ProductEntity>
+            {
+                ReturnDocument = ReturnDocument.After
+            };
+
+            var updatedProduct = await _collection.FindOneAndUpdateAsync(
+                filter,
+                update,
+                options
+            );
+
+            return updatedProduct;
+        }
+
+        public async Task<ProductEntity> UpdatePriceAsync(string id, decimal price)
+        {
+            var filter = Builders<ProductEntity>
+                .Filter
+                .Eq(p => p.Id, id);
+
+            var update = Builders<ProductEntity>
+                .Update
+                .Set(p => p.Price, price);
 
             var options = new FindOneAndUpdateOptions<ProductEntity>
             {
