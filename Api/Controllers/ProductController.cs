@@ -54,7 +54,7 @@ namespace Api.Controllers
         
         [HttpPut("/update/{productId}")]
         public async Task<ActionResult> UpdateProduct(ProductRequestObject product, string productId)
-        {
+        {   
             var productResponse = await _useCase.UpdateProduct(productId, _mapper.Map<ProductEntity>(product));
             return Ok(_mapper.Map<ProductResponseObject>(productResponse));
         }

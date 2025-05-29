@@ -18,11 +18,8 @@ var app = builder.Build();
 
 app.UseMiddleware<Api.Middlewares.ExceptionHandlingMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+app.UseSwagger();
+app.UseSwaggerUI();
 
 app.UseHttpsRedirection();
 
