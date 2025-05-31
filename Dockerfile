@@ -22,8 +22,15 @@ RUN dotnet publish Api/Api.csproj \
     --no-self-contained \
     /p:UseAppHost=false
 
-
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+       ca-certificates \
+       openssl \
+    && rm -rf /var/lib/apt/lists/*
+
+ENV SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
 
 WORKDIR /app
 

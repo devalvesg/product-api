@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
+using System.Security.Authentication;
 
 namespace Infrastructure
 {
@@ -20,7 +21,14 @@ namespace Infrastructure
             services.AddSingleton<IMongoClient>(sp =>
             {
                 var opts = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
-                return new MongoClient(opts.ConnectionString);
+                var settings = new MongoClient(opts.ConnectionString);
+                settings.Settings.SslSettings = new SslSettings
+                {
+                    EnabledSslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13,
+                    CheckCertificateRevocation = true
+                };
+
+                return settings;
             });
 
             services.AddScoped(sp =>
