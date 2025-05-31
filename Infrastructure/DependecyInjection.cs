@@ -21,14 +21,16 @@ namespace Infrastructure
             services.AddSingleton<IMongoClient>(sp =>
             {
                 var opts = sp.GetRequiredService<IOptions<MongoDbSettings>>().Value;
-                var settings = new MongoClient(opts.ConnectionString);
-                settings.Settings.SslSettings = new SslSettings
+
+                var clientSettings = MongoClientSettings.FromConnectionString(opts.ConnectionString);
+
+                clientSettings.SslSettings = new SslSettings
                 {
                     EnabledSslProtocols = SslProtocols.Tls12 | SslProtocols.Tls13,
                     CheckCertificateRevocation = true
                 };
 
-                return settings;
+                return new MongoClient(clientSettings);
             });
 
             services.AddScoped(sp =>
