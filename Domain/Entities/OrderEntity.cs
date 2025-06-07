@@ -14,5 +14,7 @@ namespace Domain.Entities
         public DateTime RegisteredAt { get; set; }
         [BsonElement("status")]
         public OrderStatus Status { get; set; }
+        [BsonElement("customer_id")]
+        public string CustomerId { get; set; }
     }
 }

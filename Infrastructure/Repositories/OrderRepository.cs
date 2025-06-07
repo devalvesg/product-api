@@ -17,34 +17,31 @@ namespace Infrastructure.Repositories
             _collection = database.GetCollection<OrderEntity>(collectionName);
         }
 
-        public Task<OrderEntity> ChangeOrderStatusToCancelled(string orderId)
+        public async Task<OrderEntity> CreateAsync(OrderEntity order)
         {
-            throw new NotImplementedException();
+            await _collection.InsertOneAsync(order);
+            return order;
         }
 
-        public Task<OrderStatus> ConsultOrderStatus(string id)
+        public async Task<List<OrderEntity>> GetOrdersByCustomerAsync(string customerId)
         {
-            throw new NotImplementedException();
+            return await _collection.Find(x => x.CustomerId == customerId).ToListAsync();
         }
 
-        public Task<OrderEntity> CreateAsync(ProductEntity product)
+        public async Task<OrderEntity?> GetByIdAsync(string orderId)
         {
-            throw new NotImplementedException();
+            return await _collection.Find(x => x.Id == orderId).FirstOrDefaultAsync();
         }
 
-        public Task DeleteAsync(string id)
+        public async Task<OrderStatus> ConsultOrderStatus(string orderId)
         {
-            throw new NotImplementedException();
+            var order = await _collection.Find(x => x.Id == orderId).FirstOrDefaultAsync();
+            return order.Status;
         }
 
-        public Task<List<OrderEntity>> GetAsync(string customerId)
+        public async Task<OrderEntity> ChangeOrderStatusToCancelled(OrderEntity order)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task<OrderEntity?> GetByIdAsync(string id)
-        {
-            throw new NotImplementedException();
+            return await _collection.FindOneAndReplaceAsync(x => x.Id == order.Id, order);
         }
     }
 }

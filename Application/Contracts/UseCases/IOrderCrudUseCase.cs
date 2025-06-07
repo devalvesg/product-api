@@ -8,6 +8,5 @@ namespace Application.Contracts.UseCases
         Task<List<OrderEntity>> GetOrdersByCustomer(string customerId);
         Task<OrderEntity?> GetOrderById(string orderId);
         Task<OrderEntity> CreateOrder(OrderEntity order);
-        Task DeleteOrder (string orderId);
     }
 }

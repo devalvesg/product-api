@@ -9,5 +9,6 @@ namespace Application.ResponseObjects
         public decimal TotalValue { get; set; }
         public DateTime RegisteredAt { get; set; }
         public OrderStatus Status { get; set; }
+        public string CustomerId { get; set; }
     }
 }

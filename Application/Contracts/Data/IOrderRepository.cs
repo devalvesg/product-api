@@ -5,11 +5,10 @@ namespace Application.Contracts.Data
 {
     public interface IOrderRepository
     {
-        Task<List<OrderEntity>> GetAsync(string customerId);
+        Task<List<OrderEntity>> GetOrdersByCustomerAsync(string customerId);
         Task<OrderEntity?> GetByIdAsync(string orderId);
-        Task<OrderEntity> CreateAsync(ProductEntity product);
-        Task DeleteAsync(string orderId);
+        Task<OrderEntity> CreateAsync(OrderEntity order);
         Task<OrderStatus> ConsultOrderStatus(string orderId);
-        Task<OrderEntity> ChangeOrderStatusToCancelled (string orderId);
+        Task<OrderEntity> ChangeOrderStatusToCancelled (OrderEntity order);
     }
 }

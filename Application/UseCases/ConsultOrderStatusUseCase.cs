@@ -6,9 +6,9 @@ namespace Application.UseCases
 {
     public class ConsultOrderStatusUseCase(IOrderRepository _repository) : IConsultOrderStatusUseCase
     {
-        public Task<OrderStatus> ConsultOrderStatus(string orderId)
+        public async Task<OrderStatus> ConsultOrderStatus(string orderId)
         {
-            return Task.FromResult(OrderStatus.Confirmed);
+            return await _repository.ConsultOrderStatus(orderId);
         }
     }
 }

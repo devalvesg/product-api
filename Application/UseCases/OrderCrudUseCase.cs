@@ -1,35 +1,28 @@
 ﻿using Application.Contracts.Data;
 using Application.Contracts.UseCases;
 using Application.Enums;
+using Application.Exceptions;
 using Domain.Entities;
 
 namespace Application.UseCases
 {
     public class OrderCrudUseCase(IOrderRepository _repository) : IOrderCrudUseCase
     {
-        public Task<OrderStatus> ConsultOrderStatus(string orderId)
+        public async Task<OrderEntity> CreateOrder(OrderEntity order)
         {
-            throw new NotImplementedException();
+            order.Status = OrderStatus.Pending;
+            order.RegisteredAt = DateTime.UtcNow;
+            return await _repository.CreateAsync(order);
+        }
+        
+        public async Task<OrderEntity?> GetOrderById(string orderId)
+        {
+            return await _repository.GetByIdAsync(orderId) ?? throw new CustomException("Order not found");
         }
 
-        public Task<OrderEntity> CreateOrder(OrderEntity order)
+        public async Task<List<OrderEntity>> GetOrdersByCustomer(string customerId)
         {
-            throw new NotImplementedException();
-        }
-
-        public Task DeleteOrder(string orderId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<OrderEntity?> GetOrderById(string orderId)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<List<OrderEntity>> GetOrdersByCustomer(string customerId)
-        {
-            throw new NotImplementedException();
+            return await _repository.GetOrdersByCustomerAsync(customerId);
         }
     }
 }
