@@ -42,9 +42,13 @@ namespace Infrastructure
 
             //Repository
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
 
             //UseCases
             services.AddScoped<IProductCrudUseCase, ProductCrudUseCase>();
+            services.AddScoped<IOrderCrudUseCase, OrderCrudUseCase>();
+            services.AddScoped<IConsultOrderStatusUseCase, ConsultOrderStatusUseCase>();
+            services.AddScoped<IChangeOrderStatusToCancelledUseCase, ChangeOrderStatusToCancelledUseCase>();
             return services;
         }
     }
