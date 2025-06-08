@@ -3,8 +3,6 @@ using Domain.Entities;
 using Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using ZstdSharp.Unsafe;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories
 {
