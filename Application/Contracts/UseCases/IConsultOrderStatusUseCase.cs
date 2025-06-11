@@ -5,6 +5,6 @@ namespace Application.Contracts.UseCases
 {
     public interface IConsultOrderStatusUseCase
     {
-        Task<OrderStatus> ConsultOrderStatus(string orderId);
+        Task<string> ConsultOrderStatus(string orderId);
     }
 }

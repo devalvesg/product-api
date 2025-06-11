@@ -7,7 +7,7 @@ namespace Domain.Entities
     public class OrderEntity : BaseEntity
     {
         [BsonElement("products")]
-        public List<string> Products { get; set; }
+        public List<ProductEntity> Products { get; set; }
         [BsonElement("total_value")]
         public decimal TotalValue { get; set; }
         [BsonElement("registered_at")]

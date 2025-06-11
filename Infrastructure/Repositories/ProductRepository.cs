@@ -25,6 +25,11 @@ namespace Infrastructure.Repositories
         {
             return await _collection.Find(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
         }
+
+        public async Task<List<ProductEntity>> GetByIdsAsync(List<string> productIds)
+        {
+            return await _collection.Find(x => productIds.Contains(x.Id) && !x.IsDeleted).ToListAsync();
+        }
         
         public async Task<ProductEntity?> GetByNameAsync(string productName)
         {

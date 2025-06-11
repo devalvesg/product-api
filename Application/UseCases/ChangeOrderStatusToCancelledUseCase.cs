@@ -17,6 +17,8 @@ namespace Application.UseCases
                 throw new CustomException("Order status cannot be change because the order already has been confirmed");
             }
 
+            order.Status = OrderStatus.Cancelled;
+
             return await _repository.ChangeOrderStatusToCancelled(order);
         }
     }
