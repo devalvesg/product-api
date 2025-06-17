@@ -11,6 +11,8 @@ namespace Application.Mappings
         {
             CreateMap<ProductRequestObject, ProductEntity>();
             CreateMap<ProductEntity, ProductResponseObject>();
+            CreateMap<OrderRequestObject, OrderEntity>();
+            CreateMap<OrderEntity, OrderResponseObject>();
         }
     }
 }

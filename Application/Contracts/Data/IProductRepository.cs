@@ -6,6 +6,7 @@ namespace Application.Contracts.Data
     {
         Task<List<ProductEntity>> GetAsync();
         Task<ProductEntity?> GetByIdAsync(string id);
+        Task<List<ProductEntity>> GetByIdsAsync(List<string> productIds);
         Task<ProductEntity?> GetByNameAsync(string productName);
         Task<ProductEntity> CreateAsync(ProductEntity product);
         Task<ProductEntity> ReplaceAsync(ProductEntity product);

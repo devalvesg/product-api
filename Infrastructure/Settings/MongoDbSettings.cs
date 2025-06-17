@@ -10,6 +10,7 @@
     public class CollectionsSettings
     {
         public string ProductCollection { get; set; } = null!;
+        public string OrderCollection { get; set; } = null!;
 
     }
 }

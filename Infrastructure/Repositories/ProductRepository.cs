@@ -3,8 +3,6 @@ using Domain.Entities;
 using Infrastructure.Settings;
 using Microsoft.Extensions.Options;
 using MongoDB.Driver;
-using ZstdSharp.Unsafe;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories
 {
@@ -26,6 +24,11 @@ namespace Infrastructure.Repositories
         public async Task<ProductEntity?> GetByIdAsync(string id)
         {
             return await _collection.Find(x => x.Id == id && !x.IsDeleted).FirstOrDefaultAsync();
+        }
+
+        public async Task<List<ProductEntity>> GetByIdsAsync(List<string> productIds)
+        {
+            return await _collection.Find(x => productIds.Contains(x.Id) && !x.IsDeleted).ToListAsync();
         }
         
         public async Task<ProductEntity?> GetByNameAsync(string productName)
